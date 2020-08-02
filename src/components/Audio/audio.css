@@ -1,0 +1,18 @@
+.progressBar{
+	background: var(--background-gradient);
+	
+	height: 100%;
+	width: 0%;          /* Default behaviour */
+}
+
+.progressBar_container{
+	height: 5px;
+	background-color: lightgrey;
+}
+
+.controls {
+	width: 30px;
+	margin: 5px;
+	display: block;
+	cursor: pointer;
+}

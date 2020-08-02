@@ -1,0 +1,26 @@
+.main {
+	height: 100vh;
+	display: flex;
+	background: #e1e8ef;
+	align-items: center;
+	justify-content: center;
+}
+
+.content {
+	width: 90%;
+	margin: auto;
+	max-width: 400px;
+}
+
+.card {
+	padding: 5%;
+}
+
+.tabs {
+	display: flex;
+	justify-content: center;
+}
+
+.tabs li:not(:last-child) {
+	flex-grow: 1;
+}

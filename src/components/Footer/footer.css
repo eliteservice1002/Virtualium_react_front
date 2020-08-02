@@ -1,0 +1,52 @@
+.mainContent {
+	background: var(--background-gradient);
+}
+
+.footer {
+	padding: 5%;
+	margin: auto;
+	display: grid;
+	grid-gap: 20px;
+	width: max-content;
+}
+
+.footer > * {
+	display: grid;
+}
+
+.botonera {
+	grid-gap: 20px;
+}
+
+.contentLogo img {
+	margin: auto;
+	display: block;
+}
+
+.contentLinks a {
+	color: #fff;
+	text-align: center;
+}
+
+.btnDemo {
+	margin: 0 auto;
+	display: block;
+	width: max-content;
+	border: 1px solid #fff;
+	background: transparent;
+}
+
+.btnDemo:hover {
+	background: var(--second-color);
+}
+
+@media only screen and (min-width: 768px) {
+	.footer {
+		width: 100%;
+		grid-template-columns: repeat(4, 1fr);
+	}
+
+	.contentLinks a {
+		text-align: left;
+	}
+}

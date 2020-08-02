@@ -1,0 +1,27 @@
+.title {
+	color: var(--first-color);
+	text-transform: uppercase;
+}
+
+.destacados {
+	background: var(--third-color);
+}
+
+.destacados,
+.proximamente {
+	padding: 30px 0;
+}
+
+.destacados .title,
+.proximamente .title {
+	margin: 0;
+	padding: 0 5% 30px;
+}
+
+.todos {
+	background: var(--dark-grey);
+}
+
+.proximamente {
+	background: var(--ligth-grey);
+}

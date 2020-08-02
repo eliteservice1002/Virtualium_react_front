@@ -1,0 +1,25 @@
+.mainContent {
+	padding-left: 250px;
+}
+
+.mainContent h4 {
+	text-align: center;
+}
+
+.sidenavContent {
+	width: 250px;
+}
+
+.panelContent {
+	padding: 5%;
+	margin: auto;
+	min-height: 90vh;
+	max-width: 1050px;
+}
+
+.loading {
+	height: 50vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

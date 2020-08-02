@@ -1,0 +1,22 @@
+.contentRedesSociales {
+	display: grid;
+	grid-gap: 10px;
+	margin: auto 0;
+	align-items: center;
+	transition: all .3s;
+	grid-template-rows: max-content;
+	grid-template-columns: repeat(3, max-content);
+}
+
+.contentRedesSociales a > img {
+	width: var(--header-width-icon-img-big);
+	margin: auto;
+	display: block;
+	transition: var(--header-transition);
+}
+
+@media only screen and (min-width: 993px) {
+	.contentRedesSociales.scrollActive a > img {
+		width: var(--header-width-icon-img-small);
+	}
+}

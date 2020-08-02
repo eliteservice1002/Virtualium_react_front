@@ -1,0 +1,128 @@
+:root {
+	--slider-height-progressbar: 4px;
+}
+
+.slider {
+	width: 100%;
+	height: 400px;
+	position: relative;
+}
+
+/********************************************
+* Fullscreen slider
+********************************************/
+.slider.fullscreen {
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 100%;
+	overflow: hidden;
+	position: absolute;
+}
+
+.slider.fullscreen .slides {
+	height: 100%;
+}
+
+/********************************************
+* slider with progress bar
+********************************************/
+.slider.whithProgressBar {
+	padding-bottom: var(--slider-height-progressbar);
+}
+
+.progressbar {
+	left: 0;
+	width: 0;
+	content: '';
+	z-index: 100;
+	position: absolute;
+	background: #9CD1D9;
+	height: var(--slider-height-progressbar);
+	bottom: -var(--slider-height-progressbar);
+
+}
+
+/*.progressbar.fullWidth {
+	width: 100% !important;
+}*/
+
+/********************************************
+* slides
+********************************************/
+.slider .slides {
+	margin: 0;
+	height: 400px;
+	background-color: #030447;
+}
+
+.slider .slides li {
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	width: 100%;
+	height: inherit;
+	overflow: hidden;
+}
+
+.slider .slides li img {
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	background-position: center;
+}
+
+.caption {
+	top: 15%;
+	left: 15%;
+	opacity: 0;
+	width: 70%;
+	color: #fff;
+	position: absolute;
+}
+
+
+/********************************************
+* Arrows
+********************************************/
+.arrowLeft, .arrowRight {
+	width: 36px;
+	height: 36px;
+	z-index: 300;
+	cursor: pointer;
+	position: absolute;
+	display: inline-block;
+	top: calc(50% - 18px);
+	border-top: 1px solid white;
+	backface-visibility: hidden;
+	border-left: 1px solid white;
+}
+
+.arrowRight {
+	right: 40px;
+	transform: rotate(135deg) skew(-7deg, -7deg);
+}
+
+.arrowLeft {
+	left: 40px;
+	transform: rotate(-45deg) skew(-7deg, -7deg);
+}
+
+@media only screen and (max-width: 992px) {
+	.arrowLeft, .arrowRight {
+		width: 20px;
+		height: 20px;
+		top: calc(50% - 10px);
+	}
+
+	.arrowRight {
+		right: 15px;
+	}
+
+	.arrowLeft {
+		left: 15px;
+	}
+}

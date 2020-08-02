@@ -1,0 +1,104 @@
+.wrapperFormTicket form {
+	width: 85%;
+	margin: auto auto 10px;
+}
+
+.wrapperFormTicket form p:first-of-type {
+	line-height: 1.4;
+}
+
+.lineDivider {
+	width: 100%;
+	border-bottom: 1px solid var(--second-color);
+}
+
+.wrapperFormTicket {
+	line-height: 3;
+}
+
+
+.wrapperFormTicket, 
+.wrapperFormTicket label {
+	text-align: center !important;
+}
+
+.wrapperFormTicket label {
+	line-height: 3;
+	left: 0 !important;
+}
+
+.wrapperFormTicket h2, .wrapperFormTicket h3 {
+	text-transform: uppercase;
+}
+
+.wrapperFormTicket h2 {
+	font-size: 1.6rem;
+}
+
+.wrapperFormTicket h3, .wrapperFormTicket h4 {
+	font-size: 1.2rem;
+	margin: 20px 0 10px;
+}
+
+.wrapperFormTicket h2,
+.wrapperFormTicket h3 {
+	color: var(--third-color);
+}
+.wrapperFormTicket h4 {
+	color: var(--second-color);
+}
+
+.recoverPassword {
+	line-height: 1;
+	color: #707070;
+	cursor: pointer;
+}
+
+.wrapperFormTicket [type='submit'] {
+	background: var(--background-gradient-ligth);
+}
+
+.btnHover {
+	background-color: red !important;
+}
+
+.wrapperLogin {
+	color: #707070;
+	margin: 25px 0 10px;
+	font-size: 12px;
+}
+
+.btnFacebook, .btnGoogle {
+	background: #B8B8B8;
+	height: 21px;
+	font-size: 10px;
+	line-height: 1;
+	padding: 8px;
+	margin: 5px;
+}
+
+.btnCreate {
+	background: var(--background-gradient-dark) !important;
+}
+
+.btnGoogle,
+.btnFacebook {
+	border-radius: 30px;
+}
+
+.cancelar {
+	color: #2D2D2D;
+	background: #fff;
+	border: 1px solid;
+	text-transform: uppercase;
+}
+
+.recaptcha {}
+
+.createCancelWrapper {
+	display: grid;
+	grid-gap: 10px;
+	padding-bottom: 20px;
+	justify-content: center;
+	grid-template-columns: max-content;
+}

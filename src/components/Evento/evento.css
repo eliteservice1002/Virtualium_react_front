@@ -1,0 +1,124 @@
+.mainContent {
+  padding: 5%;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: 25% 1fr 25%;
+}
+
+.mainContent img {
+  width: 100%;
+}
+
+.titulo {
+  margin-top: 0;
+}
+
+.infoBanda {
+  padding: 0 15% 0 0;
+}
+
+/***********************************
+* Módulo ComprarAcceso
+***********************************/
+.CA .header {
+  background: #666;
+  text-align: center;
+}
+
+.CA .header h2 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+.CA .form,
+.CA .header {
+  padding: 5%;
+}
+
+.CA .form {
+  margin-top: 10px;
+}
+.CA .form .select {
+  margin-bottom: 2rem;
+}
+
+.btnSalaVirtual {
+  margin: auto;
+  display: block;
+  width: max-content;
+  background: var(--background-gradient-ligth);
+}
+
+.btnSalaVirtual[disabled] {
+  opacity: 0.5;
+}
+
+.wrapperPreloader {
+  display: flex;
+  margin: 20px 0;
+  justify-content: center;
+}
+
+.proximamente > h4 {
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--second-color);
+}
+
+.secFunciones,
+.secFunciones > .header {
+  margin-bottom: 50px;
+}
+
+.secFunciones > .header {
+  /*margin-bottom: 20px;*/
+}
+
+/* .switch span:first-of-type {
+  font-size: 1.2rem;
+}
+
+.switch {
+  margin-bottom: 30px;
+} */
+
+.validar {
+  margin-bottom: 20px;
+  background: var(--background-gradient);
+}
+
+.irSalaVirtual {
+  margin: 20px 0;
+  background: var(--background-gradient);
+}
+
+/******************************
+* Botonera
+******************************/
+.botonera {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr 170px;
+}
+
+.botonera div:nth-child(1),
+.botonera div:nth-child(2) {
+  display: grid;
+  grid-gap: 20px;
+  align-items: center;
+}
+
+.botonera div:nth-child(1) {
+  grid-template-columns: repeat(2, max-content);
+}
+
+/******************
+ * MOBILE
+*******************/
+@media only screen and (max-width: 992px) {
+  .mainContent {
+    grid-template-columns: 1fr;
+  }
+}

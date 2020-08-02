@@ -1,0 +1,65 @@
+.mainContent {
+	top: 0;
+	left: 0;
+	height: 100%;
+	position: fixed;
+	overflow-y: auto;
+	padding: 120px 15px 15px;
+	box-shadow: 1px 0 20px 0 #7c4d95;
+	background: linear-gradient(45deg, #d00e5a, #7c4d95);
+}
+
+.mainContent::-webkit-scrollbar {
+	right: -3px;
+	position: relative;
+	width: 5px;
+	border-radius: 8px;
+}
+
+/* Track */
+.mainContent::-webkit-scrollbar-track {
+	background: transparent; 
+	border-radius: 8px;
+}
+
+.mainContent:hover::-webkit-scrollbar-track {
+	background: #f1f1f1; 
+	border-radius: 8px;
+}
+ 
+/* Handle */
+.mainContent::-webkit-scrollbar-thumb {
+	background: transparent;
+	border-radius: 8px;
+	transition: all .3;
+}
+
+.mainContent:hover::-webkit-scrollbar-thumb {
+	background: #7c4d95;
+	border-radius: 8px;
+}
+
+/* Handle on hover */
+.mainContent::-webkit-scrollbar-thumb:hover {
+	background: #666; 
+}
+
+.mainContent a {
+	color: #fff !important;
+}
+
+/************************************
+* NavGroup
+************************************/
+.menuCaption label {
+	color: #fff;
+	font-size: 1.3rem;
+	text-transform: uppercase;
+}
+
+/************************************
+* NavItem
+************************************/
+.menuItem {
+	padding-left: 5%;
+}

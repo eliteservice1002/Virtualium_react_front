@@ -1,0 +1,30 @@
+.container{
+    width: 33%;
+    height: 25%;
+
+    padding: 3px;
+    
+    border: 2px gray solid;
+    border-radius: 10px;
+}
+
+
+.image{
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+
+}
+
+
+.approved{
+    border-color: lime;
+}
+
+.rejected{
+    border-color: red;
+}

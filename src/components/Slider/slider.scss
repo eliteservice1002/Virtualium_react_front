@@ -1,0 +1,43 @@
+.slider {
+	&.fullscreen {
+		ul.indicators {
+			z-index: 2;
+			bottom: 30px;
+		}
+	}
+
+	.slides {
+		li {
+			&.active {
+				z-index: 2;
+			}
+		}
+	}
+
+	.indicators {
+		position: absolute;
+		text-align: center;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		margin: 0;
+
+		.indicator-item {
+			display: inline-block;
+			position: relative;
+			cursor: pointer;
+			height: 16px;
+			width: 16px;
+			margin: 0 12px;
+			background-color: transparent;
+			border: 1px solid #fff;
+			transition: background-color .3s;
+			border-radius: 50%;
+
+			&.active {
+				background-color: #1099AF;
+				border: 1px solid #1099AF;
+			}
+		}
+	}
+}

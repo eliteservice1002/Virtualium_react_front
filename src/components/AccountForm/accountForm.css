@@ -1,0 +1,12 @@
+.card {
+	padding: 5%;
+}
+
+.tabs {
+	display: flex;
+	justify-content: center;
+}
+
+.tabs li:not(:last-child) {
+	flex-grow: 1;
+}

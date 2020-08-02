@@ -1,0 +1,154 @@
+.fullscreen {
+  height: 100vh;
+  background: #212121;
+  overflow: hidden;
+}
+
+.bottombar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgb(10, 10, 10, 0.8);
+  color: white;
+  padding: 10px 20px 10px 20px;
+  display: flex;
+  place-content: center;
+}
+
+.bottombar span {
+  font-size: 20px;
+  font-weight: bold;
+  margin-right: 40px;
+  margin-left: 10px;
+  align-self: center;
+}
+
+.uploadGroup {
+  background-color: #3f51b5 !important;
+  margin-right: 20px !important;
+}
+
+.uploadButtons {
+  background-color: #0000006e !important;
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+  color: white !important;
+}
+
+.submitButton {
+  margin-top: 10px !important;
+  background-color: #3f51b5 !important;
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+  color: white !important;
+  place-self: center;
+}
+
+.uploadButtonsRecord {
+  background-color: #0000006e !important;
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+  color: red !important;
+}
+
+.uploadGroup span {
+  font-size: 20px;
+  font-weight: bold;
+  margin-right: 0px;
+  margin-left: 0px;
+  display: flex;
+  color: white;
+}
+
+.uploadButtonGroup {
+  background-color: #212121;
+}
+
+.messageButtonGroup {
+  background-color: white;
+  display: grid;
+}
+
+.messageForm {
+  background-color: #212121;
+}
+
+.recordstatus {
+  align-self: center;
+}
+
+.red {
+  color: red;
+}
+
+.white {
+  color: white;
+}
+
+.volumeslider {
+  width: 200px;
+  color: white;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(45deg, black, #00000070);
+}
+
+.volumeMute {
+  align-self: center;
+  display: flex;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  cursor: default;
+}
+
+.alignCenter {
+  align-self: center;
+}
+
+.alert {
+  position: absolute;
+  width: 100%;
+  z-index: 9999;
+}
+
+.white {
+  color: white !important;
+}
+
+.black {
+  color: #464646 !important;
+}
+
+/* .switchButton {
+    margin-left: 20px;
+}
+
+.switchButton button{
+    padding: 5px 0px 2px 0px;
+}
+
+.switchButton span{
+    padding: 0px;
+    font-size: 18px;
+    margin-right: 5px;
+    padding-bottom: 1px;
+} */
+
+.volumeMute a {
+  color: white;
+}
+
+.messageBox {
+  font-family: Arial !important;
+}
+
+.messageBoxOut {
+  max-height: calc(100% - 75px);
+}
+
+.messageButtonGroupEmoji {
+  background-color: white;
+  display: grid;
+  width: 400px;
+}

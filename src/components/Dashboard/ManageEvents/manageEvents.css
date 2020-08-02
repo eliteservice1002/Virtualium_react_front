@@ -1,0 +1,43 @@
+/*************************************
+* Grid Template
+*************************************/
+.grid {
+	display: grid;
+}
+
+.gridC2 {
+	grid-template-columns: 1fr 1fr;
+}
+
+.gridInputs {
+	grid-gap: 0 20px;
+}
+
+/*************************************
+* addEvent
+*************************************/
+.addEvent h3 {
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.botonera h4 {
+	grid-column: 1 / -1;
+}
+
+.botonera {
+	display: grid;
+	grid-gap: 10px;
+	margin: 20px 0;
+	grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+}
+
+.wrapperInputs {}
+
+.inputs {}
+
+.wrapperInputs > input.inputs {
+	/*border: 1px solid #9e9e9e;*/
+}
+
+.selectM {}

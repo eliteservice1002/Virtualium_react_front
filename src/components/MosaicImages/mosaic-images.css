@@ -1,0 +1,17 @@
+.mosaic{
+	height: 100vh;
+	width: auto;
+
+	padding: 5px;
+	margin: 10px;
+
+	outline: 5px dotted rgb(187, 217, 245);
+	border: 2px solid rgb(161, 196, 238);
+
+	border-radius: 15px;
+}
+
+.mosaic img{
+	width: 100%;
+	border-radius: 15px;
+}

@@ -1,0 +1,56 @@
+:root{
+	--primary-color: gray;
+	--secondary-color: #888;
+	--third-color: rgb(149, 177, 182);
+}
+
+.main_box{
+	border-radius: 12px;
+	margin: 8px;
+	border: 2px gray solid;
+
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+
+	height: 80vh;
+	overflow-y: scroll;
+}
+
+.message_box {
+	border-radius: 20px;
+	width: 30%;
+	height: auto;
+	margin:1%;
+}
+
+.main_box h3 {
+	color: grey;
+}
+
+
+.user_image{
+	border-radius: 50%;
+	float: left;
+
+	width: 40px; height: 40px;
+
+	position: relative;
+	border: 2px solid var(--primary-color);
+
+	margin: 5px 7px 0 0;
+}
+
+.user_nick{
+	color:var(--primary-color);
+	font-style: italic;
+}
+
+.text{
+	color: black;
+}
+
+.text_error{
+	color: red;
+
+}

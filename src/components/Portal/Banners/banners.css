@@ -1,0 +1,67 @@
+.mainContent {
+	width: 100%;
+	height: 100vh;
+	position: relative;
+}
+
+.mainContent .slider li .caption {
+	top: unset;
+	width: 85%;
+	left: 100px;
+	bottom: 50px;
+}
+
+.date {
+	font-size: 25px;
+	color: var(--first-color);
+}
+
+.title {
+	padding: 0;
+	color: #fff;
+	font-weight: 400;
+	margin: 0 0 1rem;
+	font-size: 4.5rem;
+}
+
+.location {
+	margin: 0;
+	display: inline-block;
+}
+
+.btn {
+	height: auto;
+	display: block;
+	margin-top: 30px;
+	font-size: 1.5rem;
+	border: 2px solid;
+	padding: 12px 26px;
+	background-color: #000;
+}
+
+@media only screen and (max-width: 992px) {
+	.mainContent .slider li .caption {
+		width: 100%;
+		padding: 5%;
+		left: 0;
+	}
+
+	.date {
+		font-size: 18px;
+	}
+
+	.title {
+		font-size: 2rem;
+	}
+
+	.location {
+		font-size: 1.5rem;
+	}
+
+	.btn {
+		padding: 6px 20px;
+		height: auto;
+		font-size: 1rem;
+		margin-top: 15px;
+	}
+}

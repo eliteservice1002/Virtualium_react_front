@@ -1,0 +1,80 @@
+/*
+ * Variables used for the project.
+ * In order to call these variables into your css files (or less or scss)
+ *
+ * you use for example:
+ * background-color: var(--first-color);
+ *
+ *
+ * --first-color: the main color of the website, the most common to see.
+ * --second-color: it complements the first color.
+ * --third-color: background colors, or where it shouldn't be used widely.
+ * 			maybe complements buttons or text, who knows. 
+ * 			It should be a darker color.
+ *
+ * */
+:root {
+  --first-color: #f19122;
+  --second-color: #d00e5a;
+  --third-color: #7c4d95;
+  --ligth-grey: #333333;
+  --dark-grey: #1a1a1a;
+
+  --first-color-alpha_50: black;
+  --second-color-alpha_50: black;
+  --third-color_alpha_50: black;
+
+  --background-gradient-dark: linear-gradient(
+    45deg,
+    var(--second-color),
+    var(--third-color)
+  );
+  --background-gradient-ligth: linear-gradient(
+    45deg,
+    var(--first-color),
+    var(--second-color)
+  );
+  --background-gradient: linear-gradient(
+    45deg,
+    var(--first-color),
+    var(--second-color),
+    var(--third-color)
+  );
+
+  /* variables of the header */
+  --header-transition: all 0.5s;
+  --header-width-icon-img-big: 40px;
+  --header-width-icon-img-small: 30px;
+}
+
+/*
+ * It defines the style of the scrollbar of the website
+ * */
+/* width */
+::-webkit-scrollbar {
+  right: -3px;
+  position: relative;
+  width: 10px;
+  border-radius: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 8px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border: 2px var(--primary-color) solid;
+  border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+.MuiSelect-select {
+  width: 85px !important;
+}

@@ -1,0 +1,253 @@
+.fullscreen {
+  height: 100vh;
+  position: relative;
+  background: #212121;
+}
+
+.fullscreen.hide {
+  cursor: none;
+}
+
+.logo {
+  top: 0;
+  left: 0;
+  z-index: 10;
+  padding: 10px;
+  position: fixed;
+  transition: all 1s;
+}
+
+.logo.hide {
+  left: -100%;
+}
+
+.bottombar:after {
+  top: 0;
+  left: 0;
+  z-index: 0;
+  opacity: 0.6;
+  width: 100%;
+  content: "";
+  height: 100%;
+  position: absolute;
+  background: var(--background-gradient);
+}
+
+.uploadButtonGroup {
+  background-color: #212121;
+}
+
+.submitButton {
+  margin-top: 10px !important;
+  background-color: #3f51b5 !important;
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+  color: white !important;
+  place-self: center;
+}
+
+.messageButtonGroup {
+  background-color: white;
+  display: grid;
+}
+
+.messageBox {
+  font-family: Arial !important;
+}
+
+.messageForm {
+  background-color: #212121;
+}
+
+.recordstatus {
+  top: 0;
+  right: 0;
+  z-index: 10;
+  color: #fff;
+  display: grid;
+  padding: 20px;
+  grid-gap: 10px;
+  position: fixed;
+  font-weight: 500;
+  align-self: center;
+  transition: all 1s;
+  align-items: center;
+  justify-content: center;
+  grid-template-columns: max-content max-content;
+}
+
+.recordstatus.hide {
+  right: -100%;
+}
+
+.red {
+  color: red;
+}
+
+.white {
+  color: white;
+}
+
+.alignCenter {
+  align-self: center;
+}
+
+.alert {
+  position: absolute;
+  width: 100%;
+  z-index: 9999;
+}
+
+.switchButton {
+  margin-left: 20px;
+  margin-top: 4px;
+}
+
+.switchButton button {
+  padding: 5px 0px 2px 0px;
+}
+
+.switchButton span {
+  padding: 0px;
+  font-size: 18px;
+  margin-right: 5px;
+  padding-bottom: 1px;
+}
+
+.white {
+  color: white !important;
+}
+
+.black {
+  color: #464646;
+}
+
+.messageBoxOut {
+  max-height: calc(100% - 75px);
+}
+
+.messageButtonGroupEmoji {
+  width: 400px;
+  display: grid;
+  background-color: white;
+}
+
+/************************************************
+* BOTTOM BAR GENERAL
+************************************************/
+.bottombar {
+  bottom: 0;
+  width: 100%;
+  color: white;
+  display: flex;
+  position: absolute;
+  transition: all 1s;
+  padding: 10px 20px 10px 20px;
+  place-content: center space-between;
+}
+
+.bottombar > * {
+  z-index: 10;
+}
+
+.bottombar.hide {
+  bottom: -100%;
+}
+
+.col1,
+.col2,
+.col3,
+.col4 {
+  display: grid;
+}
+
+.col1 {
+  place-content: center;
+  grid-template-columns: repeat(3, max-content);
+}
+
+.col2 {
+  grid-gap: 10px;
+  justify-content: center;
+  grid-template-columns: repeat(5, max-content);
+}
+
+.col3 {
+}
+
+.col4 {
+  grid-template-columns: repeat(2, max-content);
+}
+
+/************************************************
+* VOLUMEN
+************************************************/
+.volumeslider {
+  width: 200px;
+  color: white;
+  display: flex;
+  align-self: center;
+  align-items: center;
+}
+
+.sliderRoot,
+.sliderRail,
+.sliderThumb,
+.sliderTrack {
+  color: #fff;
+}
+
+.volumeMute {
+  display: flex;
+  cursor: default;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  align-self: center;
+}
+
+.volumeMute a {
+  color: white;
+}
+
+/************************************************
+* BOTTOM BAR ICON-BUTTON - CONTROLS
+************************************************/
+.iconButton {
+  width: 50px;
+  height: 50px;
+  margin: auto;
+  display: block;
+  cursor: pointer;
+}
+
+.iconButton > img {
+  width: 100%;
+}
+
+.select_color {
+  background-color: black;
+  width: 300px;
+}
+
+.select_items {
+  background-color: black !important;
+  color: white !important;
+  margin-left: -56px !important;
+}
+
+.MuiSwitch-track {
+  background-color: #dcdbdb !important;
+}
+
+.MuiSwitch-colorSecondary.Mui-checked {
+  background-color: #fffdfe !important;
+}
+
+[type="checkbox"] + span:not(.lever) {
+  padding-left: 0 !important;
+  height: 20px;
+}
+[type="checkbox"] + span:not(.lever):before,
+[type="checkbox"]:not(.filled-in) + span:not(.lever):before {
+  display: none;
+}

@@ -1,0 +1,68 @@
+.maincontent {
+ width: 90%;
+ margin: auto;
+}
+
+.infoBanda p:first-of-type {
+	font-size: 2rem;
+}
+
+.aviso,
+.felicitaciones,
+.infoBanda p:first-of-type {
+	margin: .5rem;
+}
+
+.aviso,
+.infoBanda p:first-of-type {
+	color: var(--third-color);
+}
+
+.nombreRecinto,
+.infoBanda p:first-of-type {
+	font-weight: 300;
+}
+
+.nombreBanda,
+.nombreRecinto {
+	margin: 0;
+}
+
+.nombreBanda {
+	font-size: 2.5rem;
+}
+
+.nombreRecinto,
+.felicitaciones {
+	color: #333;
+}
+
+.aviso,
+.nombreRecinto,
+.felicitaciones,
+.content h3:first-of-type {
+	font-size: 1.5rem;
+}
+
+
+.content {
+	text-align: center;
+	margin: 0 auto 50px;
+}
+
+.content h3:first-of-type {
+	margin: 10px 0;
+	text-transform: uppercase;
+}
+
+.content > img {
+	max-width: 250px;
+}
+
+.felicitaciones {
+
+}
+
+.irSalaVirtual {
+	background: var(--background-gradient);
+}

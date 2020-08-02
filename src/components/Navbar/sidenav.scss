@@ -1,0 +1,145 @@
+$sidenav-line-height: 48px;
+$sidenav-font-size: 14px;
+$sidenav-item-height: 48px;
+$sidenav-padding: 16px;
+
+.sidenav {
+	top: 0;
+	left: 0;
+	margin: 0;
+	z-index: 999;
+	width: 300px;
+	height: 100%;
+	position: fixed;
+	overflow-y: auto;
+	// padding-bottom: 60px;
+	background-color: #000;
+	will-change: transform;
+	height: -moz-calc(100%);
+	// height: calc(100% + 60px);
+	backface-visibility: hidden;
+	transform: translateX(-105%);
+
+	// Right Align
+	&.right-aligned {
+		right: 0;
+		transform: translateX(105%);
+		left: auto;
+		transform: translateX(100%);
+	}
+
+	.collapsible {
+		margin: 0;
+	}
+
+
+	li {
+		float: none;
+		margin-bottom: 10px;
+		line-height: $sidenav-line-height;
+
+		&.active { background-color: rgba(0,0,0,.05); }
+	}
+
+	li > a {
+		color: #fff;
+		padding: 0 5%;
+		display: block;
+		font-weight: 500;
+		height: $sidenav-item-height;
+		font-size: $sidenav-font-size;
+		line-height: $sidenav-line-height;
+
+		&:hover { background-color: rgba(0,0,0,.05);}
+
+		&.btn, &.btn-large, &.btn-flat, &.btn-floating {
+			margin: 10px 15px;
+		}
+
+		& > i,
+		& > [class^="mdi-"], li > a > [class*="mdi-"],
+		& > i.material-icons {
+			float: left;
+			height: $sidenav-item-height;
+			line-height: $sidenav-line-height;
+			margin: 0 ($sidenav-padding * 2) 0 0;
+			width: $sidenav-item-height / 2;
+			color: #fff;
+		}
+	}
+}
+
+
+// Touch interaction
+.drag-target {
+	// Right Align
+	&.right-aligned {
+		right: 0;
+	}
+
+	height: 100%;
+	width: 10px;
+	position: fixed;
+	top: 0;
+	z-index: 998;
+}
+
+
+// Fixed Sidenav shown
+.sidenav.sidenav-fixed {
+	// Right Align
+	&.right-aligned {
+		right: 0;
+		left: auto;
+	}
+
+	left: 0;
+	transform: translateX(0);
+	position: fixed;
+}
+
+// Fixed Sidenav hide on smaller
+@media only screen and (max-width : 992px) {
+	.sidenav {
+		&.sidenav-fixed {
+			transform: translateX(-105%);
+
+			&.right-aligned {
+				transform: translateX(105%);
+			}
+		}
+
+		> a {
+			padding: 0 $sidenav-padding;
+		}
+
+		.user-view {
+			padding: $sidenav-padding $sidenav-padding 0;
+		}
+	}
+}
+
+
+// .sidenav .collapsible-body > ul:not(.collapsible) > li.active,
+// .sidenav.sidenav-fixed .collapsible-body > ul:not(.collapsible) > li.active {
+// 	background-color: $primary-color;
+// 	a {
+// 		color: $sidenav-bg-color;
+// 	}
+// }
+// .sidenav .collapsible-body {
+// 	padding: 0;
+// }
+
+
+.sidenav-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	opacity: 0;
+	height: 120vh;
+	background-color: rgba(0,0,0,.5);
+	z-index: 997;
+	display: none;
+}

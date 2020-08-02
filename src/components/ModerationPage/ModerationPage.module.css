@@ -1,0 +1,50 @@
+.grid{
+    display: grid;
+    height: 80vh;
+
+    grid-template:
+    "options ." 1fr
+    "images preview" 7fr
+    / 4fr 5fr;
+}
+
+.gridArea_options{grid-area: options;}
+
+.gridArea_images{grid-area: images;}
+
+.gridArea_preview{grid-area: preview; padding: 20px;}
+
+
+.thumbnails_preview{
+    display: flex;
+    flex-wrap: wrap;
+    
+    flex-direction: row;
+    overflow-y: scroll;
+}
+
+.selected_preview{
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+
+    
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+
+@media only screen and (max-width: 600px){
+    .grid{
+        display: grid;
+        height: 80vh;
+    
+        grid-template:
+        "preview preview"4fr
+        "images options" 3fr
+        / 4fr  1fr;
+    }
+    
+}

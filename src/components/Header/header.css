@@ -1,0 +1,159 @@
+.contentFixed {
+	height: 100px;
+}
+
+.contentFixed.home {
+	height: auto;
+}
+
+.navbar {
+	top: 0;
+	left: 0;
+	color: #fff;
+	width: 100%;
+	display: grid;
+	z-index: 1000;
+	grid-gap: 20px;
+	position: fixed;
+	padding: 10px 5%;
+	grid-template-columns: 180px 1fr 1fr;
+}
+
+.navbar:after {
+	content: '';
+	width: 100%;
+	opacity: .8;
+	z-index: -1;
+	height: 100%;
+	background: #000;
+	position: absolute;
+}
+
+.contentRedesSociales {
+	display: flex;
+	padding-left: 30px;
+}
+
+.buscadorContent,
+.tuTicketeraContent {
+	right: 5%;
+	width: 350px;
+	background: #fff;
+	overflow-y: auto;
+	position: absolute;
+	transition: all .3s;
+	transform: scale(0);
+	transform-origin: top right;
+	max-height: calc(100vh - 150px);
+}
+
+.open {
+	transform: scale(1);
+}
+
+/*********************************************
+* Logo
+*********************************************/
+.contentLogo {
+	display: flex;
+}
+
+.contentLogo > a {
+	margin: auto;
+	display: block;
+}
+
+.logo {
+	width: 180px;
+	transition: var(--header-transition);
+}
+
+/*********************************************
+* Estilos del Navbar
+*********************************************/
+.noPointer {
+	cursor: initial;
+}
+
+.navItemBotonDefault {
+	color: #fff;
+	line-height: 2;
+	cursor: pointer;
+	font-size: 1rem;
+	padding: 5px 10px;
+	border: 1px solid;
+	border-radius: 30px;
+	text-transform: uppercase;
+	transition: var(--header-transition);
+}
+
+.iconImg {
+	transition: var(--header-transition);
+	width: var(--header-width-icon-img-big);
+}
+
+.username {
+	margin: auto;
+}
+
+.link {
+	color: #fff;
+	display: block;
+	cursor: pointer;
+}
+
+.link > i {
+	font-size: 3rem;
+	padding-top: 6px;
+}
+
+/*********************************************
+* Estilos cuando está el scrollTop > 100
+*********************************************/
+.logo.scrollActive {
+	width: 130px;
+}
+
+.navbar.scrollActive:after {
+	opacity: 1;
+}
+
+.navbar.scrollActive {
+	padding: 0 5%;
+}
+
+.link.scrollActive > i {
+	font-size: 2.5rem;
+}
+
+.navItemBotonDefault.scrollActive {
+	font-size: 0.8rem;
+}
+
+.iconImg.scrollActive {
+	width: var(--header-width-icon-img-small);
+}
+
+/*********************************************
+* Mobile / Sidenav
+*********************************************/
+.buscadorContent.mobileActive,
+.tuTicketeraContent.mobileActive {
+	top: 0;
+	right: 0;
+	width: 100%;
+	max-height: none;
+	position: absolute;
+}
+.sidenavRedesSociales {
+	padding: 5%;
+}
+
+.contentFormsSidenav {
+	position: relative;
+}
+
+.navItemBotonDefault.mobileActive {
+	margin: 0 5%;
+	width: max-content;
+}

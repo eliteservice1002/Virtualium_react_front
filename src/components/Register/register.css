@@ -1,0 +1,196 @@
+.wrapperRegister {
+	position: absolute;
+	background: #fff;
+	right: 20px;
+	top: 100px;
+	color: #000;
+	width: 95%;
+	max-height: calc(100vh - 150px);
+	overflow-y: auto;
+	max-width: 1200px;
+	transform: scale(0);
+	transition: all .3s;
+	transform-origin: top right;
+}
+
+.wrapperRegister i {
+	color: #1099AF !important;
+	font-size: 25px !important;
+	width: 2rem !important;
+	top: 1.8rem !important;
+}
+
+.wrapperRegister h2 {
+	color: #1B4B53;
+	margin-bottom: 10px;
+}
+
+.texto {
+	margin: 0;
+	color: #6d6a6a;
+	padding: 0 0.75rem;
+}
+
+.lineTitle {
+	width: 350px;
+	height: 1px;
+	background: #1099AF;
+}
+
+.wrapperRegister label {
+	/*left: 0 !important;*/
+}
+
+.recaptcha > div > div {
+	float: right;
+	margin-right: .55rem;
+}
+
+.btnRegister {
+	margin: 10px .55rem;
+	width: 100%;
+	max-width: 304px;
+}
+
+.checkboxWrapper {
+	line-height: 2;
+}
+
+.selectRequired {
+	line-height: 1;
+	padding-top: 10px !important;
+	color: #9e9e9e;
+}
+
+.selectRequired span:first-child {
+	padding: 0 12px;
+}
+
+.selectM {
+	margin: 10px 0 !important;
+}
+
+.selectM input {
+	color: #999;
+}
+
+.selectM label {
+ top: -35px !important;
+}
+
+.selectM ul {
+	max-height: 200px;
+}
+
+.inputIcon i {
+	position: absolute;
+	width: 3rem !important;
+	font-size: 2rem !important;
+	transition: color .2s;
+	top: 0.5rem !important;
+}
+
+/* mobile */
+.wrapperRegister.mobile {
+	top: 50px;
+	left: 0;
+	right: initial;
+	width: 100%;
+	max-height: none;
+	padding-bottom: 100px;
+}
+
+.wrapperRegister.mobile h2 {
+	font-size: 1.5rem;
+}
+
+.wrapperRegister.mobile .label {
+	margin: 10px 0 0;
+	line-height: 1;
+	color: #9e9e9e;
+}
+
+.wrapperRegister.mobile .lineTitle {
+	width: 100%;
+}
+
+.inputBottom input {
+	border-bottom: 1px solid #9e9e9e !important;
+}
+
+.header {
+	display: grid;
+	align-items: center;
+	padding: 15px 0;
+	grid-template-columns: 150px 1fr;
+}
+
+.previewImg {
+	margin: auto;
+	width: 100px;
+	height: 100px;
+	display: block;
+	cursor: pointer;
+	position: relative;
+	border-radius: 50px;
+	transition: all .5s;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.previewImg:hover:before {
+	content: '';
+	width: 100%;
+	z-index: 10;
+	height: 100%;
+	display: block;
+	position: absolute;
+	background-size: 30px;
+	background-color: #f9f6f638;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-image: url('/img/icons/camera.svg');
+}
+
+.profileImg .uploadAvatar {
+	width: 100px;
+	margin: auto;
+	height: 100px;
+	display: flex;
+	cursor: pointer;
+	border: 1px solid;
+	border-radius: 50px;
+	background: #cac5c5;
+	align-items: center;
+	border-style: dashed;
+	justify-content: center;
+}
+
+.modalUpload {
+	max-width: 350px;
+}
+
+.profileImg .uploadAvatar > img {
+	width: 30px;
+}
+
+.modalUpload > div:first-child {
+	min-height: 200px;
+}
+
+.btnUpload {
+	margin: 10px;
+}
+
+@media only screen and (max-width: 992px) {
+	.header {
+		padding: 20px;
+		grid-gap: 20px;
+		grid-template-columns: 1fr;
+	}
+
+	.profileImg {
+		order: 1;
+	}
+}
