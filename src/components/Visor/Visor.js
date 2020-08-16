@@ -12,6 +12,7 @@ import {
   IconButton,
   InputLabel,
   Grid,
+  Snackbar,
 } from "@material-ui/core";
 
 import Switch from "@material-ui/core/Switch";
@@ -35,11 +36,15 @@ import ReactPlayer from "react-player";
 import { Link } from "react-router-dom";
 import Fullscreen from "react-full-screen";
 import Alert from "@material-ui/lab/Alert";
+
 import CloseIcon from "@material-ui/icons/Close";
 import { triggerBase64Download } from "react-base64-downloader";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import useWindowDimensions from "../Dimensions/useWindowDimensions";
 import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
+
+// about tuch event and keyboard handler part
+import { Swipeable } from "react-touch";
 
 /* components */
 import Icon from "../Icon";
@@ -59,6 +64,10 @@ import { API_PY, CAMERA_URL } from "../../config.js";
 const videoConstraints = {
   facingMode: "user",
 };
+
+function MultiAlert(props) {
+  return <Alert elevation={6} variant="filled" {...props} />;
+}
 
 const SelectIcon = () => {
   return (
@@ -129,7 +138,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+var messageflag = false;
+var tempflag = false;
+
 const Visor = (props) => {
+  const [popupflag, setPopupflag] = React.useState(false);
   const classes = useStyles();
   const webcamRef = useRef(null);
   const mediaRecorderRef = useRef(null);
@@ -155,6 +168,10 @@ const Visor = (props) => {
   const [recordedChunks_Audio, setRecordedChunks_Audio] = useState([]);
   const [settingflag, setSettingFlag] = useState(false);
 
+  // this part is for tuch handler
+  const [currentChanel, setCurrentChannel] = useState(0);
+  const [open, setOpen] = useState(false);
+
   const [srcUrl, setSrcurl] = useState(
     CAMERA_URL + "camera-1/output_1280x720_6500k.m3u8"
   );
@@ -167,7 +184,12 @@ const Visor = (props) => {
         setIinactivityTime((prevState) => --prevState);
       }, 1000)
     );
+    window.addEventListener("mousedown", handlepopupstate_mouse);
   }, []);
+
+  useEffect(() => {
+    messageflag = popupflag;
+  }, [popupflag]);
 
   useEffect(() => {
     return () => {
@@ -183,6 +205,17 @@ const Visor = (props) => {
     }
   }, [alertFlag]);
 
+  const handlepopupstate = () => {
+    setPopupflag(true);
+  };
+  const handletempflag = () => {
+    tempflag = true;
+  };
+  const handlepopupstate_mouse = () => {
+    setPopupflag(false);
+    if (tempflag) setPopupflag(true);
+    tempflag = false;
+  };
   const handler = useCallback(
     ({ clientX, clientY }) => {
       setIinactivityTime(5);
@@ -193,15 +226,15 @@ const Visor = (props) => {
   // Add event listener using our hook
   useEventListener("mousemove", handler);
 
-  const channelChange = (e) => {
-    if (e.target.value) {
-      setChannel(e.target.value);
+  const channelChange = () => {
+    if (currentChanel) {
+      setChannel(currentChanel);
       switch (resolutionType) {
         case 0:
           setSrcurl(
             CAMERA_URL +
               "camera-" +
-              e.target.value +
+              currentChanel +
               "/output_1920x1080_8000k.m3u8"
           );
           break;
@@ -209,7 +242,7 @@ const Visor = (props) => {
           setSrcurl(
             CAMERA_URL +
               "camera-" +
-              e.target.value +
+              currentChanel +
               "/output_1280x720_6500k.m3u8"
           );
           break;
@@ -217,7 +250,7 @@ const Visor = (props) => {
           setSrcurl(
             CAMERA_URL +
               "camera-" +
-              e.target.value +
+              currentChanel +
               "/output_960x540_2000k.m3u8"
           );
           break;
@@ -225,7 +258,7 @@ const Visor = (props) => {
           setSrcurl(
             CAMERA_URL +
               "camera-" +
-              e.target.value +
+              currentChanel +
               "/output_768x432_1200k.m3u8"
           );
           break;
@@ -447,7 +480,6 @@ const Visor = (props) => {
         (blobFile) =>
           new File([blobFile], timestamp + ".h264", { type: "video/webm" })
       );
-    console.log(file);
     const formData = new FormData();
     formData.append("files", file);
     await axios
@@ -544,361 +576,451 @@ const Visor = (props) => {
     }
   }, [recordedChunks_Audio]);
 
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const handleUserKeyPress = useCallback(
+    (event) => {
+      if (messageflag === false) {
+        const { key, keyCode } = event;
+        if (keyCode === 37 || keyCode === 40) {
+          if (currentChanel > 1) {
+            setCurrentChannel((currentChanel) => currentChanel - 1);
+          }
+        }
+        if (keyCode === 38 || keyCode === 39) {
+          if (currentChanel < 20) {
+            setCurrentChannel((currentChanel) => currentChanel + 1);
+          }
+        }
+      }
+    },
+    [currentChanel]
+  );
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleUserKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleUserKeyPress);
+    };
+  }, [handleUserKeyPress]);
+
+  useEffect(() => {
+    if (currentChanel < 21 && currentChanel > 0) {
+      channelChange();
+      setOpen(true);
+    }
+  }, [currentChanel]);
+
   return uploadingFlag ? (
     <Loading />
   ) : (
     <Fullscreen enabled={isFull} onChange={() => setFullscreen(isFull)}>
-      <Link to="/">
-        <img
-          src="/img/virtualium.png"
-          className={cx(style.logo, {
-            [`${style.hide}`]: hideflag ? null : inactivityTime <= 0,
-          })}
-        />
-      </Link>
-
-      <div
-        className={cx(style.recordstatus, {
-          [`${style.hide}`]: hideflag ? null : inactivityTime <= 0,
-        })}
+      <Snackbar
+        open={open}
+        autoHideDuration={1000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
-        <Icon className={cx("tiny", isRecord ? style.red : style.white)}>
-          fiber_manual_record
-        </Icon>
-        <span>EN VIVO</span>
-      </div>
+        <MultiAlert onClose={handleClose} severity="success">
+          Channel {currentChanel}
+        </MultiAlert>
+      </Snackbar>
+      <Swipeable
+        onSwipeLeft={() => {
+          if (currentChanel < 20 && messageflag === false) {
+            setCurrentChannel((currentChanel) => currentChanel + 1);
+          }
+        }}
+        onSwipeRight={() => {
+          if (currentChanel > 0 && messageflag === false) {
+            setCurrentChannel((currentChanel) => currentChanel - 1);
+          }
+        }}
+        onSwipeDown={() => {
+          if (currentChanel < 20 && messageflag === false) {
+            setCurrentChannel((currentChanel) => currentChanel + 1);
+          }
+        }}
+        onSwipeUp={() => {
+          if (currentChanel > 0 && messageflag === false) {
+            setCurrentChannel((currentChanel) => currentChanel - 1);
+          }
+        }}
+      >
+        <div>
+          <Link to="/">
+            <img
+              src="/img/virtualium.png"
+              className={cx(style.logo, {
+                [`${style.hide}`]: hideflag ? null : inactivityTime <= 0,
+              })}
+            />
+          </Link>
 
-      <div className={style.alert}>
-        <Collapse in={alertFlag}>
-          <Alert
-            action={
-              <IconButton
-                aria-label="close"
-                color="inherit"
-                size="small"
-                onClick={() => {
-                  setOpenalert(false);
-                }}
-              >
-                <CloseIcon fontSize="inherit" />
-              </IconButton>
-            }
-            severity={alertType ? "success" : "error"}
+          <div
+            className={cx(style.recordstatus, {
+              [`${style.hide}`]: hideflag ? null : inactivityTime <= 0,
+            })}
           >
-            {alertMessage}
-          </Alert>
-        </Collapse>
-      </div>
-      <div
-        className={cx(style.fullscreen, {
-          [`${style.hide}`]: hideflag ? null : inactivityTime <= 0,
-        })}
-      >
-        {channelType == "local" ? (
-          <Webcam
-            audio={true}
-            height={"100%"}
-            ref={webcamRef}
-            screenshotFormat="image/jpeg"
-            width={"100%"}
-            videoConstraints={videoConstraints}
-          />
-        ) : (
-          // else
-          <ReactPlayer
-            url={srcUrl}
-            playing={true}
-            controls={false}
-            muted={!muteFlag}
-            width={width + "px"}
-            height={height + "px"}
-            volume={volumeVal / 100}
-          />
-        )}
-        <div
-          className={cx(style.bottombar, {
-            [`${style.hide}`]: hideflag ? null : inactivityTime <= 0,
-          })}
-        >
-          <div className={style.col1}>
-            <span>Nombre evento...</span>
-            <div className={style.volumeslider}>
-              <VolumeDown />
-              <Slider
-                value={volumeVal}
-                aria-labelledby="continuous-slider"
-                onChange={(event, newValue) => volumeChange(newValue)}
-                classes={{
-                  track: style.sliderTrack,
-                  thumb: style.sliderThumb,
-                  rail: style.sliderRail,
-                }}
-              />
-            </div>
-
-            {/* <div
-              className={style.volumeMute}
-              onClick={() => setMute(!muteFlag)}
-            >
-              <Icon className="small">
-                {muteFlag ? "volume_mute" : "volume_off"}
-              </Icon>
-            </div> */}
+            <Icon className={cx("tiny", isRecord ? style.red : style.white)}>
+              fiber_manual_record
+            </Icon>
+            <span>EN VIVO</span>
           </div>
 
-          {/*#######################################*/}
-          <div className={style.col2}>
-            <span onClick={capture} className={cx(style.iconButton)}>
-              <img src="/img/icons/icon-capture.svg" alt="" />
-            </span>
-
-            <span
-              className={cx(style.iconButton)}
-              onClick={() =>
-                capturing_Audio
-                  ? handleStopCaptureClick_Audio()
-                  : handleStartCaptureClick_Audio()
-              }
-            >
-              <img
-                src={`/img/icons/icon-record-audio-${
-                  capturing_Audio ? "stop" : "start"
-                }.svg`}
-                alt=""
-              />
-            </span>
-
-            <PopupState variant="popover" popupId="message-popup-popover">
-              {(popupState) => (
-                <div className={style.alignCenter}>
-                  <span
-                    {...bindTrigger(popupState)}
-                    className={cx(style.iconButton)}
-                  >
-                    <img src="/img/icons/icon-message.svg" alt="" />
-                  </span>
-                  <Popover
-                    {...bindPopover(popupState)}
-                    anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "center",
+          <div className={style.alert}>
+            <Collapse in={alertFlag}>
+              <Alert
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setOpenalert(false);
                     }}
-                    transformOrigin={{
-                      vertical: "bottom",
-                      horizontal: "center",
-                    }}
-                    className={style.messageBoxOut}
                   >
-                    <Box p={2} className={style.messageButtonGroupEmoji}>
-                      <InputEmoji
-                        value={message}
-                        onChange={setMessage}
-                        placeholder="Type a message"
-                        className={style.customEmoji}
-                      />
-                      <IconButton
-                        className={style.submitButton}
-                        color="primary"
-                        aria-label="record video"
-                        component="span"
-                        onClick={submitMessage}
-                      >
-                        <Send />
-                      </IconButton>
-                    </Box>
-                  </Popover>
-                </div>
-              )}
-            </PopupState>
-
-            <span
-              onClick={handleUploadPicture}
-              className={cx(style.iconButton)}
-            >
-              <img src="/img/icons/icon-cloud.svg" alt="" />
-              <input
-                multiple
-                type="file"
-                accept="image/*"
-                onChange={submitFiles}
-                ref={_uploadPictureRef}
-                style={{ display: "none" }}
-              />
-            </span>
-
-            <span
-              className={cx(style.iconButton)}
-              onClick={() =>
-                capturing ? handleStopCaptureClick() : handleStartCaptureClick()
-              }
-            >
-              <img
-                src={`/img/icons/icon-record-video-${
-                  capturing ? "stop" : "start"
-                }.svg?v2`}
-                alt=""
-              />
-            </span>
-          </div>
-          {/*#######################################*/}
-
-          {/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/}
-          <div className={cx(style.volumeMute, style.col3)}>
-            <Select
-              value={channelType}
-              onChange={channelChange}
-              input={<BootstrapInput />}
-              IconComponent={SelectIcon}
-            >
-              <MenuItem value={"local"}>Local CAM</MenuItem>
-              <MenuItem value={1}>Camera-1</MenuItem>
-              <MenuItem value={2}>Camera-2</MenuItem>
-              <MenuItem value={3}>Camera-3</MenuItem>
-              <MenuItem value={4}>Camera-4</MenuItem>
-              <MenuItem value={5}>Camera-5</MenuItem>
-              <MenuItem value={6}>Camera-6</MenuItem>
-              <MenuItem value={7}>Camera-7</MenuItem>
-              <MenuItem value={8}>Camera-8</MenuItem>
-              <MenuItem value={9}>Camera-9</MenuItem>
-              <MenuItem value={10}>Camera-10</MenuItem>
-              <MenuItem value={11}>Camera-11</MenuItem>
-              <MenuItem value={12}>Camera-12</MenuItem>
-              <MenuItem value={13}>Camera-13</MenuItem>
-              <MenuItem value={14}>Camera-14</MenuItem>
-              <MenuItem value={15}>Camera-15</MenuItem>
-              <MenuItem value={16}>Camera-16</MenuItem>
-              <MenuItem value={17}>Camera-17</MenuItem>
-              <MenuItem value={18}>Camera-18</MenuItem>
-              <MenuItem value={19}>Camera-19</MenuItem>
-              <MenuItem value={20}>Camera-20</MenuItem>
-            </Select>
-          </div>
-
-          {/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/}
-
-          {/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/}
-          <div className={style.col4}>
-            <div className={style.volumeMute}>
-              {/* <span
-                className={cx(style.iconButton)}
-                onClick={(e) => setSettingFlag(!settingflag)}
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+                severity={alertType ? "success" : "error"}
               >
-                <img src="/img/icons/icon-setting.svg" alt="" />
-              </span> */}
+                {alertMessage}
+              </Alert>
+            </Collapse>
+          </div>
+          <div
+            className={cx(style.fullscreen, {
+              [`${style.hide}`]: hideflag ? null : inactivityTime <= 0,
+            })}
+          >
+            {channelType == "local" ? (
+              <Webcam
+                audio={true}
+                height={"100%"}
+                ref={webcamRef}
+                screenshotFormat="image/jpeg"
+                width={"100%"}
+                videoConstraints={videoConstraints}
+              />
+            ) : (
+              // else
+              <ReactPlayer
+                url={srcUrl}
+                playing={true}
+                controls={false}
+                muted={!muteFlag}
+                width={width + "px"}
+                height={height + "px"}
+                volume={volumeVal / 100}
+              />
+            )}
+            <div
+              className={cx(style.bottombar, {
+                [`${style.hide}`]: hideflag ? null : inactivityTime <= 0,
+              })}
+            >
+              <div className={style.col1}>
+                <span>Nombre evento...</span>
+                <div className={style.volumeslider}>
+                  <VolumeDown />
+                  <Slider
+                    value={volumeVal}
+                    aria-labelledby="continuous-slider"
+                    onChange={(event, newValue) => volumeChange(newValue)}
+                    classes={{
+                      track: style.sliderTrack,
+                      thumb: style.sliderThumb,
+                      rail: style.sliderRail,
+                    }}
+                  />
+                </div>
 
-              <PopupState variant="popover">
-                {(popupState) => (
-                  <div>
-                    <span
-                      {...bindTrigger(popupState)}
-                      className={cx(style.iconButton)}
+                {/* <div
+                      className={style.volumeMute}
+                      onClick={() => setMute(!muteFlag)}
                     >
-                      <img src="/img/icons/icon-setting.svg" alt="" />
-                    </span>
-                    <Popover
-                      {...bindPopover(popupState)}
-                      anchorOrigin={{
-                        vertical: "top",
-                        horizontal: "center",
-                      }}
-                      transformOrigin={{
-                        vertical: "bottom",
-                        horizontal: "center",
-                      }}
-                    >
-                      <Box p={2} className={style.select_color}>
-                        <Box>
-                          <Grid container spacing={3}>
-                            <Grid item xs={9}>
-                              <p style={{ color: "white" }}>
-                                Mostrar lista de mensajes
-                              </p>
-                            </Grid>
-                            <Grid item xs={3} style={{ paddingTop: "20px" }}>
-                              <Switch
-                                className={classes.switchTyle}
-                                // checked={state.gilad}
-                                // onChange={handleChange}
-                                name="checkedA"
-                                inputProps={{
-                                  "aria-label": "secondary checkbox",
-                                }}
-                              />
-                            </Grid>
-                          </Grid>
+                      <Icon className="small">
+                        {muteFlag ? "volume_mute" : "volume_off"}
+                      </Icon>
+                    </div> */}
+              </div>
+
+              {/*#######################################*/}
+              <div className={style.col2}>
+                <span onClick={capture} className={cx(style.iconButton)}>
+                  <img src="/img/icons/icon-capture.svg" alt="" />
+                </span>
+
+                <span
+                  className={cx(style.iconButton)}
+                  onClick={() =>
+                    capturing_Audio
+                      ? handleStopCaptureClick_Audio()
+                      : handleStartCaptureClick_Audio()
+                  }
+                >
+                  <img
+                    src={`/img/icons/icon-record-audio-${
+                      capturing_Audio ? "stop" : "start"
+                    }.svg`}
+                    alt=""
+                  />
+                </span>
+
+                <PopupState variant="popover" popupId="message-popup-popover">
+                  {(popupState) => (
+                    <div className={style.alignCenter}>
+                      <span
+                        {...bindTrigger(popupState)}
+                        className={cx(style.iconButton)}
+                      >
+                        <img
+                          src="/img/icons/icon-message.svg"
+                          alt=""
+                          onClick={handlepopupstate}
+                        />
+                      </span>
+                      <Popover
+                        {...bindPopover(popupState)}
+                        anchorOrigin={{
+                          vertical: "top",
+                          horizontal: "center",
+                        }}
+                        transformOrigin={{
+                          vertical: "bottom",
+                          horizontal: "center",
+                        }}
+                        className={style.messageBoxOut}
+                      >
+                        <Box p={2} className={style.messageButtonGroupEmoji}>
+                          <InputEmoji
+                            value={message}
+                            onChange={setMessage}
+                            onClick={handletempflag}
+                            placeholder="Type a message"
+                            className={style.customEmoji}
+                          />
+                          <IconButton
+                            className={style.submitButton}
+                            color="primary"
+                            aria-label="record video"
+                            component="span"
+                            onClick={submitMessage}
+                          >
+                            <Send />
+                          </IconButton>
                         </Box>
-                        <Box>
-                          <Grid container spacing={3}>
-                            <Grid item xs={9}>
-                              <p style={{ color: "white" }}>
-                                Barra visor siempre visible
-                              </p>
-                            </Grid>
-                            <Grid item xs={3} style={{ paddingTop: "20px" }}>
-                              <Switch
-                                className={classes.switchTyle}
-                                checked={hideflag}
-                                onClick={() => setHideFlag(!hideflag)}
-                                name="checkedA"
-                                inputProps={{
-                                  "aria-label": "secondary checkbox",
-                                }}
-                              />
-                            </Grid>
-                          </Grid>
-                        </Box>
-                        <Box>
-                          <Grid container spacing={3}>
-                            <Grid item xs={9}>
-                              <p style={{ color: "white" }}>Resolución </p>
-                            </Grid>
-                            <Grid item xs={3}>
-                              <Select
-                                className={classes.selectStyle}
-                                labelId="demo-simple-select-label"
-                                value={resolutionType}
-                                onChange={resolutionChange}
-                                IconComponent={SelectIcon}
-                              >
-                                <MenuItem value={0}>Auto 720px</MenuItem>
-                                <MenuItem value={1}>SD</MenuItem>
-                                <MenuItem value={2}>LD</MenuItem>
-                                <MenuItem value={3}>XD</MenuItem>
-                              </Select>
-                            </Grid>
-                          </Grid>
-                        </Box>
-                      </Box>
-                    </Popover>
-                  </div>
-                )}
-              </PopupState>
-              {/* 
-              {settingflag && (
+                      </Popover>
+                    </div>
+                  )}
+                </PopupState>
+
+                <span
+                  onClick={handleUploadPicture}
+                  className={cx(style.iconButton)}
+                >
+                  <img src="/img/icons/icon-cloud.svg" alt="" />
+                  <input
+                    multiple
+                    type="file"
+                    accept="image/*"
+                    onChange={submitFiles}
+                    ref={_uploadPictureRef}
+                    style={{ display: "none" }}
+                  />
+                </span>
+
+                <span
+                  className={cx(style.iconButton)}
+                  onClick={() =>
+                    capturing
+                      ? handleStopCaptureClick()
+                      : handleStartCaptureClick()
+                  }
+                >
+                  <img
+                    src={`/img/icons/icon-record-video-${
+                      capturing ? "stop" : "start"
+                    }.svg?v2`}
+                    alt=""
+                  />
+                </span>
+              </div>
+              {/*#######################################*/}
+
+              {/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/}
+              <div className={cx(style.volumeMute, style.col3)}>
                 <Select
-                  value={resolutionType}
+                  value={channelType}
+                  onChange={(e) => setCurrentChannel(e.target.value)}
                   input={<BootstrapInput />}
-                  onChange={resolutionChange}
                   IconComponent={SelectIcon}
                 >
-                  <MenuItem value={0}>HD</MenuItem>
-                  <MenuItem value={1}>SD</MenuItem>
-                  <MenuItem value={2}>LD</MenuItem>
-                  <MenuItem value={3}>XD</MenuItem>
+                  <MenuItem value={"local"}>Local CAM</MenuItem>
+                  <MenuItem value={1}>Camera-1</MenuItem>
+                  <MenuItem value={2}>Camera-2</MenuItem>
+                  <MenuItem value={3}>Camera-3</MenuItem>
+                  <MenuItem value={4}>Camera-4</MenuItem>
+                  <MenuItem value={5}>Camera-5</MenuItem>
+                  <MenuItem value={6}>Camera-6</MenuItem>
+                  <MenuItem value={7}>Camera-7</MenuItem>
+                  <MenuItem value={8}>Camera-8</MenuItem>
+                  <MenuItem value={9}>Camera-9</MenuItem>
+                  <MenuItem value={10}>Camera-10</MenuItem>
+                  <MenuItem value={11}>Camera-11</MenuItem>
+                  <MenuItem value={12}>Camera-12</MenuItem>
+                  <MenuItem value={13}>Camera-13</MenuItem>
+                  <MenuItem value={14}>Camera-14</MenuItem>
+                  <MenuItem value={15}>Camera-15</MenuItem>
+                  <MenuItem value={16}>Camera-16</MenuItem>
+                  <MenuItem value={17}>Camera-17</MenuItem>
+                  <MenuItem value={18}>Camera-18</MenuItem>
+                  <MenuItem value={19}>Camera-19</MenuItem>
+                  <MenuItem value={20}>Camera-20</MenuItem>
                 </Select>
-              )} */}
+              </div>
 
-              <span
-                className={cx(style.iconButton)}
-                onClick={() => setFullscreen(!isFull)}
-              >
-                <img src="/img/icons/icon-fullscreem.svg" alt="" />
-              </span>
+              {/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/}
+
+              {/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/}
+              <div className={style.col4}>
+                <div className={style.volumeMute}>
+                  {/* <span
+                      className={cx(style.iconButton)}
+                      onClick={(e) => setSettingFlag(!settingflag)}
+                    >
+                      <img src="/img/icons/icon-setting.svg" alt="" />
+                    </span> */}
+
+                  <PopupState variant="popover">
+                    {(popupState) => (
+                      <div>
+                        <span
+                          {...bindTrigger(popupState)}
+                          className={cx(style.iconButton)}
+                        >
+                          <img src="/img/icons/icon-setting.svg" alt="" />
+                        </span>
+                        <Popover
+                          {...bindPopover(popupState)}
+                          anchorOrigin={{
+                            vertical: "top",
+                            horizontal: "center",
+                          }}
+                          transformOrigin={{
+                            vertical: "bottom",
+                            horizontal: "center",
+                          }}
+                        >
+                          <Box p={2} className={style.select_color}>
+                            <Box>
+                              <Grid container spacing={3}>
+                                <Grid item xs={9}>
+                                  <p style={{ color: "white" }}>
+                                    Mostrar lista de mensajes
+                                  </p>
+                                </Grid>
+                                <Grid
+                                  item
+                                  xs={3}
+                                  style={{ paddingTop: "20px" }}
+                                >
+                                  <Switch
+                                    className={classes.switchTyle}
+                                    // checked={state.gilad}
+                                    // onChange={handleChange}
+                                    name="checkedA"
+                                    inputProps={{
+                                      "aria-label": "secondary checkbox",
+                                    }}
+                                  />
+                                </Grid>
+                              </Grid>
+                            </Box>
+                            <Box>
+                              <Grid container spacing={3}>
+                                <Grid item xs={9}>
+                                  <p style={{ color: "white" }}>
+                                    Barra visor siempre visible
+                                  </p>
+                                </Grid>
+                                <Grid
+                                  item
+                                  xs={3}
+                                  style={{ paddingTop: "20px" }}
+                                >
+                                  <Switch
+                                    className={classes.switchTyle}
+                                    checked={hideflag}
+                                    onClick={() => setHideFlag(!hideflag)}
+                                    name="checkedA"
+                                    inputProps={{
+                                      "aria-label": "secondary checkbox",
+                                    }}
+                                  />
+                                </Grid>
+                              </Grid>
+                            </Box>
+                            <Box>
+                              <Grid container spacing={3}>
+                                <Grid item xs={9}>
+                                  <p style={{ color: "white" }}>Resolución </p>
+                                </Grid>
+                                <Grid item xs={3}>
+                                  <Select
+                                    className={classes.selectStyle}
+                                    labelId="demo-simple-select-label"
+                                    value={resolutionType}
+                                    onChange={resolutionChange}
+                                    IconComponent={SelectIcon}
+                                  >
+                                    <MenuItem value={0}>Auto 720px</MenuItem>
+                                    <MenuItem value={1}>SD</MenuItem>
+                                    <MenuItem value={2}>LD</MenuItem>
+                                    <MenuItem value={3}>XD</MenuItem>
+                                  </Select>
+                                </Grid>
+                              </Grid>
+                            </Box>
+                          </Box>
+                        </Popover>
+                      </div>
+                    )}
+                  </PopupState>
+                  {/* 
+                        {settingflag && (
+                          <Select
+                            value={resolutionType}
+                            input={<BootstrapInput />}
+                            onChange={resolutionChange}
+                            IconComponent={SelectIcon}
+                          >
+                            <MenuItem value={0}>HD</MenuItem>
+                            <MenuItem value={1}>SD</MenuItem>
+                            <MenuItem value={2}>LD</MenuItem>
+                            <MenuItem value={3}>XD</MenuItem>
+                          </Select>
+                        )} */}
+
+                  <span
+                    className={cx(style.iconButton)}
+                    onClick={() => setFullscreen(!isFull)}
+                  >
+                    <img src="/img/icons/icon-fullscreem.svg" alt="" />
+                  </span>
+                </div>
+              </div>
+              {/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/}
             </div>
           </div>
-          {/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/}
         </div>
-      </div>
+      </Swipeable>
     </Fullscreen>
   );
 };
