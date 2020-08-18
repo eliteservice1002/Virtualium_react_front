@@ -157,7 +157,7 @@ const Visor = (props) => {
   const [alertFlag, setOpenalert] = useState(false);
   const [alertType, setAlerttype] = useState(false);
   const [capturing, setCapturing] = useState(false);
-  const [channelType, setChannel] = useState("local");
+  const [channelType, setChannel] = useState(1);
   const [resolutionType, setResolution] = useState(0);
   const [intervalId, setIntervalId] = useState(null);
   const [uploadingFlag, setUploading] = useState(false);
@@ -168,8 +168,8 @@ const Visor = (props) => {
   const [recordedChunks_Audio, setRecordedChunks_Audio] = useState([]);
   const [settingflag, setSettingFlag] = useState(false);
 
-  // this part is for tuch handler
-  const [currentChanel, setCurrentChannel] = useState(0);
+  // this part is for touch handler
+  const [currentChanel, setCurrentChannel] = useState(1);
   const [open, setOpen] = useState(false);
 
   const [srcUrl, setSrcurl] = useState(
@@ -207,6 +207,7 @@ const Visor = (props) => {
 
   const handlepopupstate = () => {
     setPopupflag(true);
+    tempflag = true;
   };
   const handletempflag = () => {
     tempflag = true;
@@ -227,8 +228,9 @@ const Visor = (props) => {
   useEventListener("mousemove", handler);
 
   const channelChange = () => {
+    setChannel(currentChanel);
+
     if (currentChanel) {
-      setChannel(currentChanel);
       switch (resolutionType) {
         case 0:
           setSrcurl(
@@ -610,7 +612,7 @@ const Visor = (props) => {
   }, [handleUserKeyPress]);
 
   useEffect(() => {
-    if (currentChanel < 21 && currentChanel > 0) {
+    if (currentChanel < 21 && currentChanel >= 0) {
       channelChange();
       setOpen(true);
     }
@@ -627,7 +629,7 @@ const Visor = (props) => {
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <MultiAlert onClose={handleClose} severity="success">
-          Channel {currentChanel}
+          Channel {currentChanel === 0 ? "Local CAM" : currentChanel}
         </MultiAlert>
       </Snackbar>
       <Swipeable
@@ -637,7 +639,7 @@ const Visor = (props) => {
           }
         }}
         onSwipeRight={() => {
-          if (currentChanel > 0 && messageflag === false) {
+          if (currentChanel > 1 && messageflag === false) {
             setCurrentChannel((currentChanel) => currentChanel - 1);
           }
         }}
@@ -647,7 +649,7 @@ const Visor = (props) => {
           }
         }}
         onSwipeUp={() => {
-          if (currentChanel > 0 && messageflag === false) {
+          if (currentChanel > 1 && messageflag === false) {
             setCurrentChannel((currentChanel) => currentChanel - 1);
           }
         }}
@@ -699,7 +701,7 @@ const Visor = (props) => {
               [`${style.hide}`]: hideflag ? null : inactivityTime <= 0,
             })}
           >
-            {channelType == "local" ? (
+            {channelType == 0 ? (
               <Webcam
                 audio={true}
                 height={"100%"}
@@ -724,6 +726,12 @@ const Visor = (props) => {
               className={cx(style.bottombar, {
                 [`${style.hide}`]: hideflag ? null : inactivityTime <= 0,
               })}
+              onMouseEnter={() => {
+                messageflag = true;
+              }}
+              onMouseLeave={() => {
+                messageflag = false;
+              }}
             >
               <div className={style.col1}>
                 <span>Nombre evento...</span>
@@ -858,11 +866,16 @@ const Visor = (props) => {
               <div className={cx(style.volumeMute, style.col3)}>
                 <Select
                   value={channelType}
-                  onChange={(e) => setCurrentChannel(e.target.value)}
+                  onChange={(e) => {
+                    setCurrentChannel(e.target.value);
+                    console.log(e.target.value);
+                    if (e.target.value === 0) messageflag = true;
+                    else messageflag = false;
+                  }}
                   input={<BootstrapInput />}
                   IconComponent={SelectIcon}
                 >
-                  <MenuItem value={"local"}>Local CAM</MenuItem>
+                  <MenuItem value={0}>Local CAM</MenuItem>
                   <MenuItem value={1}>Camera-1</MenuItem>
                   <MenuItem value={2}>Camera-2</MenuItem>
                   <MenuItem value={3}>Camera-3</MenuItem>
