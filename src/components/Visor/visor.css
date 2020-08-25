@@ -144,8 +144,14 @@
   transition: all 1s;
   padding: 10px 20px 10px 20px;
   place-content: center space-between;
+  display: flex;
+  flex-wrap: wrap;
 }
-
+@media screen and (max-width: 636px) {
+  .bottombar {
+    justify-content: center !important;
+  }
+}
 .bottombar > * {
   z-index: 10;
 }
@@ -164,6 +170,7 @@
 .col1 {
   place-content: center;
   grid-template-columns: repeat(3, max-content);
+  align-items: center;
 }
 
 .col2 {

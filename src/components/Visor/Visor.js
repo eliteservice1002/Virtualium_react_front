@@ -643,16 +643,16 @@ const Visor = (props) => {
             setCurrentChannel((currentChanel) => currentChanel - 1);
           }
         }}
-        onSwipeDown={() => {
-          if (currentChanel < 20 && messageflag === false) {
-            setCurrentChannel((currentChanel) => currentChanel + 1);
-          }
-        }}
-        onSwipeUp={() => {
-          if (currentChanel > 1 && messageflag === false) {
-            setCurrentChannel((currentChanel) => currentChanel - 1);
-          }
-        }}
+        // onSwipeDown={() => {
+        //   if (currentChanel < 20 && messageflag === false) {
+        //     setCurrentChannel((currentChanel) => currentChanel + 1);
+        //   }
+        // }}
+        // onSwipeUp={() => {
+        //   if (currentChanel > 1 && messageflag === false) {
+        //     setCurrentChannel((currentChanel) => currentChanel - 1);
+        //   }
+        // }}
       >
         <div>
           <Link to="/">
@@ -723,9 +723,10 @@ const Visor = (props) => {
               />
             )}
             <div
-              className={cx(style.bottombar, {
-                [`${style.hide}`]: hideflag ? null : inactivityTime <= 0,
-              })}
+              // className={cx(style.bottombar, {
+              //   [`${style.hide}`]: hideflag ? null : inactivityTime <= 0,
+              // })}
+              className={style.bottombar}
               onMouseEnter={() => {
                 messageflag = true;
               }}
@@ -863,150 +864,153 @@ const Visor = (props) => {
               {/*#######################################*/}
 
               {/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/}
-              <div className={cx(style.volumeMute, style.col3)}>
-                <Select
-                  value={channelType}
-                  onChange={(e) => {
-                    setCurrentChannel(e.target.value);
-                    console.log(e.target.value);
-                    if (e.target.value === 0) messageflag = true;
-                    else messageflag = false;
-                  }}
-                  input={<BootstrapInput />}
-                  IconComponent={SelectIcon}
-                >
-                  <MenuItem value={0}>Local CAM</MenuItem>
-                  <MenuItem value={1}>Camera-1</MenuItem>
-                  <MenuItem value={2}>Camera-2</MenuItem>
-                  <MenuItem value={3}>Camera-3</MenuItem>
-                  <MenuItem value={4}>Camera-4</MenuItem>
-                  <MenuItem value={5}>Camera-5</MenuItem>
-                  <MenuItem value={6}>Camera-6</MenuItem>
-                  <MenuItem value={7}>Camera-7</MenuItem>
-                  <MenuItem value={8}>Camera-8</MenuItem>
-                  <MenuItem value={9}>Camera-9</MenuItem>
-                  <MenuItem value={10}>Camera-10</MenuItem>
-                  <MenuItem value={11}>Camera-11</MenuItem>
-                  <MenuItem value={12}>Camera-12</MenuItem>
-                  <MenuItem value={13}>Camera-13</MenuItem>
-                  <MenuItem value={14}>Camera-14</MenuItem>
-                  <MenuItem value={15}>Camera-15</MenuItem>
-                  <MenuItem value={16}>Camera-16</MenuItem>
-                  <MenuItem value={17}>Camera-17</MenuItem>
-                  <MenuItem value={18}>Camera-18</MenuItem>
-                  <MenuItem value={19}>Camera-19</MenuItem>
-                  <MenuItem value={20}>Camera-20</MenuItem>
-                </Select>
-              </div>
+              <div style={{ display: "flex" }}>
+                <div className={cx(style.volumeMute, style.col3)}>
+                  <Select
+                    value={channelType}
+                    onChange={(e) => {
+                      setCurrentChannel(e.target.value);
+                      console.log(e.target.value);
+                      if (e.target.value === 0) messageflag = true;
+                      else messageflag = false;
+                    }}
+                    input={<BootstrapInput />}
+                    IconComponent={SelectIcon}
+                  >
+                    <MenuItem value={0}>Local CAM</MenuItem>
+                    <MenuItem value={1}>Camera-1</MenuItem>
+                    <MenuItem value={2}>Camera-2</MenuItem>
+                    <MenuItem value={3}>Camera-3</MenuItem>
+                    <MenuItem value={4}>Camera-4</MenuItem>
+                    <MenuItem value={5}>Camera-5</MenuItem>
+                    <MenuItem value={6}>Camera-6</MenuItem>
+                    <MenuItem value={7}>Camera-7</MenuItem>
+                    <MenuItem value={8}>Camera-8</MenuItem>
+                    <MenuItem value={9}>Camera-9</MenuItem>
+                    <MenuItem value={10}>Camera-10</MenuItem>
+                    <MenuItem value={11}>Camera-11</MenuItem>
+                    <MenuItem value={12}>Camera-12</MenuItem>
+                    <MenuItem value={13}>Camera-13</MenuItem>
+                    <MenuItem value={14}>Camera-14</MenuItem>
+                    <MenuItem value={15}>Camera-15</MenuItem>
+                    <MenuItem value={16}>Camera-16</MenuItem>
+                    <MenuItem value={17}>Camera-17</MenuItem>
+                    <MenuItem value={18}>Camera-18</MenuItem>
+                    <MenuItem value={19}>Camera-19</MenuItem>
+                    <MenuItem value={20}>Camera-20</MenuItem>
+                  </Select>
+                </div>
 
-              {/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/}
+                {/*$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$*/}
 
-              {/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/}
-              <div className={style.col4}>
-                <div className={style.volumeMute}>
-                  {/* <span
+                {/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/}
+                <div className={style.col4}>
+                  <div className={style.volumeMute}>
+                    {/* <span
                       className={cx(style.iconButton)}
                       onClick={(e) => setSettingFlag(!settingflag)}
                     >
                       <img src="/img/icons/icon-setting.svg" alt="" />
                     </span> */}
 
-                  <PopupState variant="popover">
-                    {(popupState) => (
-                      <div>
-                        <span
-                          {...bindTrigger(popupState)}
-                          className={cx(style.iconButton)}
-                        >
-                          <img src="/img/icons/icon-setting.svg" alt="" />
-                        </span>
-                        <Popover
-                          {...bindPopover(popupState)}
-                          anchorOrigin={{
-                            vertical: "top",
-                            horizontal: "center",
-                          }}
-                          transformOrigin={{
-                            vertical: "bottom",
-                            horizontal: "center",
-                          }}
-                        >
-                          <Box p={2} className={style.select_color}>
-                            <Box>
-                              <Grid container spacing={3}>
-                                <Grid item xs={9}>
-                                  <p style={{ color: "white" }}>
-                                    Mostrar lista de mensajes
-                                  </p>
-                                </Grid>
-                                <Grid
-                                  item
-                                  xs={3}
-                                  style={{ paddingTop: "20px" }}
-                                >
-                                  <Switch
-                                    className={classes.switchTyle}
-                                    // checked={state.gilad}
-                                    // onChange={handleChange}
-                                    name="checkedA"
-                                    inputProps={{
-                                      "aria-label": "secondary checkbox",
-                                    }}
-                                  />
-                                </Grid>
-                              </Grid>
-                            </Box>
-                            <Box>
-                              <Grid container spacing={3}>
-                                <Grid item xs={9}>
-                                  <p style={{ color: "white" }}>
-                                    Barra visor siempre visible
-                                  </p>
-                                </Grid>
-                                <Grid
-                                  item
-                                  xs={3}
-                                  style={{ paddingTop: "20px" }}
-                                >
-                                  <Switch
-                                    className={classes.switchTyle}
-                                    checked={hideflag}
-                                    onClick={() => setHideFlag(!hideflag)}
-                                    name="checkedA"
-                                    inputProps={{
-                                      "aria-label": "secondary checkbox",
-                                    }}
-                                  />
-                                </Grid>
-                              </Grid>
-                            </Box>
-                            <Box>
-                              <Grid container spacing={3}>
-                                <Grid item xs={9}>
-                                  <p style={{ color: "white" }}>Resolución </p>
-                                </Grid>
-                                <Grid item xs={3}>
-                                  <Select
-                                    className={classes.selectStyle}
-                                    labelId="demo-simple-select-label"
-                                    value={resolutionType}
-                                    onChange={resolutionChange}
-                                    IconComponent={SelectIcon}
+                    <PopupState variant="popover">
+                      {(popupState) => (
+                        <div>
+                          <span
+                            {...bindTrigger(popupState)}
+                            className={cx(style.iconButton)}
+                          >
+                            <img src="/img/icons/icon-setting.svg" alt="" />
+                          </span>
+                          <Popover
+                            {...bindPopover(popupState)}
+                            anchorOrigin={{
+                              vertical: "top",
+                              horizontal: "center",
+                            }}
+                            transformOrigin={{
+                              vertical: "bottom",
+                              horizontal: "center",
+                            }}
+                          >
+                            <Box p={2} className={style.select_color}>
+                              <Box>
+                                <Grid container spacing={3}>
+                                  <Grid item xs={9}>
+                                    <p style={{ color: "white" }}>
+                                      Mostrar lista de mensajes
+                                    </p>
+                                  </Grid>
+                                  <Grid
+                                    item
+                                    xs={3}
+                                    style={{ paddingTop: "20px" }}
                                   >
-                                    <MenuItem value={0}>Auto 720px</MenuItem>
-                                    <MenuItem value={1}>SD</MenuItem>
-                                    <MenuItem value={2}>LD</MenuItem>
-                                    <MenuItem value={3}>XD</MenuItem>
-                                  </Select>
+                                    <Switch
+                                      className={classes.switchTyle}
+                                      // checked={state.gilad}
+                                      // onChange={handleChange}
+                                      name="checkedA"
+                                      inputProps={{
+                                        "aria-label": "secondary checkbox",
+                                      }}
+                                    />
+                                  </Grid>
                                 </Grid>
-                              </Grid>
+                              </Box>
+                              <Box>
+                                <Grid container spacing={3}>
+                                  <Grid item xs={9}>
+                                    <p style={{ color: "white" }}>
+                                      Barra visor siempre visible
+                                    </p>
+                                  </Grid>
+                                  <Grid
+                                    item
+                                    xs={3}
+                                    style={{ paddingTop: "20px" }}
+                                  >
+                                    <Switch
+                                      className={classes.switchTyle}
+                                      checked={hideflag}
+                                      onClick={() => setHideFlag(!hideflag)}
+                                      name="checkedA"
+                                      inputProps={{
+                                        "aria-label": "secondary checkbox",
+                                      }}
+                                    />
+                                  </Grid>
+                                </Grid>
+                              </Box>
+                              <Box>
+                                <Grid container spacing={3}>
+                                  <Grid item xs={9}>
+                                    <p style={{ color: "white" }}>
+                                      Resolución{" "}
+                                    </p>
+                                  </Grid>
+                                  <Grid item xs={3}>
+                                    <Select
+                                      className={classes.selectStyle}
+                                      labelId="demo-simple-select-label"
+                                      value={resolutionType}
+                                      onChange={resolutionChange}
+                                      IconComponent={SelectIcon}
+                                    >
+                                      <MenuItem value={0}>Auto 720px</MenuItem>
+                                      <MenuItem value={1}>SD</MenuItem>
+                                      <MenuItem value={2}>LD</MenuItem>
+                                      <MenuItem value={3}>XD</MenuItem>
+                                    </Select>
+                                  </Grid>
+                                </Grid>
+                              </Box>
                             </Box>
-                          </Box>
-                        </Popover>
-                      </div>
-                    )}
-                  </PopupState>
-                  {/* 
+                          </Popover>
+                        </div>
+                      )}
+                    </PopupState>
+                    {/* 
                         {settingflag && (
                           <Select
                             value={resolutionType}
@@ -1021,12 +1025,13 @@ const Visor = (props) => {
                           </Select>
                         )} */}
 
-                  <span
-                    className={cx(style.iconButton)}
-                    onClick={() => setFullscreen(!isFull)}
-                  >
-                    <img src="/img/icons/icon-fullscreem.svg" alt="" />
-                  </span>
+                    <span
+                      className={cx(style.iconButton)}
+                      onClick={() => setFullscreen(!isFull)}
+                    >
+                      <img src="/img/icons/icon-fullscreem.svg" alt="" />
+                    </span>
+                  </div>
                 </div>
               </div>
               {/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/}
